@@ -16,18 +16,12 @@
         text-decoration: none;
         color: #444;
     }
-    .done{
-        background-color: pink;
-        border-radius: 50px;
-        padding: 10px;
-        font-weight: bold;
-    }
     .todolist{
         width: 500px;
         height: 800px;
         margin: 50px auto 0 auto;
-        padding: 20px;
-        border: 5px solid rgb(0, 0, 0);
+        padding: 0 20px;
+        box-shadow: 0 0 10px black;
         display: flex;
         flex-direction: column;
         background-image: url("https://mblogthumb-phinf.pstatic.net/MjAxNzA3MjlfMzQg/MDAxNTAxMzI5NjIyNTA2.wkZXLRhh9Wh4KThNlKT1lu6KyCsADEQcrZcl8PvXXoIg.GwEzWICDxC9_rDNbm393JKGb-BRM63c9U2Cw3o244sAg.GIF.tkvkdldj040616/283ab5fb859e65b1956d392f806b91b60073bff7_hq.gif?type=w2");
@@ -38,14 +32,9 @@
     .inpwrap{
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
-    }
-    .pushbox ul li{
-        display: flex;
-        justify-content: space-between;
-    }
-    .pushbox .text{
-        color: black;
+        margin-bottom: 13px;
+        height: 30px;
+        width: 100px;
     }
     .btn_modi{
         display: none;
@@ -56,7 +45,7 @@
         font-size: 30px;
         font-weight: bold;
         margin-bottom: 10px;
-        padding-bottom: 10px;
+        padding: 5px 0;
         color: white;
     }
 
@@ -65,28 +54,43 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 500px;
-        background-color: white;
-        border-radius: 30px;
-        overflow: hidden;
     }
     .pushbox ul{
+        height: 520px;
+        background-color: white;
+        border-radius: 30px;
         padding: 30px 30px 0 30px;
+        margin-bottom: 40px;
     }
     .pushbox ul li{
         margin-bottom: 10px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #000;
+        padding-bottom: 7px;
+        border-bottom: 2px solid #dfdfdf;
+        color: #56555a;
+        font-weight: bold;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
     }
+
     .allDel{
-        height: 40px;
+        background-color: transparent;
+        border: 0 none;
+        position: relative;
+    }
+    
+    .allDel i{
+        height: 100px;
+        width: 100px;
         font-weight: bold;
         border: 0 none;
-        background-color: transparent;
-        font-size: 20px;
-        color: rgb(36, 134, 226);
+        font-size: 90px;
+        color: rgba(255, 255, 255, 0.836);
         cursor: pointer;
-        border-top: 5px solid rgb(36, 134, 226);
+        position: absolute;
+        left: 10px;
     }
 
     .icon a:first-child:link{
@@ -103,8 +107,34 @@
         font-size: 17px;
         margin-left: 5px;
     }
-
+    .btn_input, .btn_modi{
+        height: 100%;
+        width: 30px;
+        background-color: transparent;
+        border: 0 none;
+        font-size: 20px;
+        color: white;
+        cursor: pointer;
+    }
+    .inp{
+        border: 0 none;
+        background-color: white;
+        border-radius: 20px;
+        padding: 10px;
+        margin-right: 5px;
+    }
     
+    .pushbox .done{
+        background-color: rgba(3, 2, 29, 0.897);
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-weight: bold;
+        font-size: 15px;
+        color: white;
+        box-shadow: 0 0 10px rgb(70, 69, 69);
+        border: 0 none;
+        margin-right: 30px;
+    }
 </style>
 <body>
         <!-- 삭제<i class="fa-solid fa-trash-can"></i>
@@ -118,14 +148,14 @@
             <input type="hidden" class="num">
             <input type="text" class="inp">
             <div class="flex">
-                <button class="btn_input"><i class="fa-regular fa-circle-check"></i></button>
-                <button class="btn_modi">수정</button>
+                <button class="btn_input"><i class="fa-solid fa-rocket"></i></button>
+                <button class="btn_modi"><i class="fa-solid fa-screwdriver-wrench"></i></button>
             </div>
         </div>
         <div class="pushbox">
             <ul></ul>
-            <button class="allDel" onclick="listAllDell()">All Delete</button>
         </div>
+        <button class="allDel" onclick="listAllDell()"><i class="fa-solid fa-dumpster-fire"></i></button>
 </div>
 
 
@@ -167,7 +197,7 @@
                     viewList += " class='done' "
                 }
             viewList += ">"
-            viewList += "<div class='text'>"+item.todo+"</div>"
+            viewList += "<div class='text11'>"+item.todo+"</div>"
             viewList += `<div class="icon">
                         <a href ="javascript:void(0)" onclick = "done(${index})"><i class="fa-regular fa-circle-check"></i></a>
                         <a href ="javascript:void(0)" onclick = "modi('${item.todo}',${index})"><i class="fa-solid fa-screwdriver-wrench"></i></a>
