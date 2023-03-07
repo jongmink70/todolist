@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+        *{margin: 0;padding: 0;box-sizing: border-box;}
+    li{
+        list-style: none;
+    }
+    a:visited,  a:link{
+        text-decoration: none;
+        color: #444;
+    }
+    .done{
+        background-color: pink;
+        border-radius: 50px;
+        padding: 10px;
+        font-weight: bold;
+    }
+    .todolist{
+        width: 500px;
+        height: 800px;
+        margin: 50px auto 0 auto;
+        padding: 20px;
+        border: 5px solid rgb(0, 0, 0);
+        display: flex;
+        flex-direction: column;
+        background-image: url("https://mblogthumb-phinf.pstatic.net/MjAxNzA3MjlfMzQg/MDAxNTAxMzI5NjIyNTA2.wkZXLRhh9Wh4KThNlKT1lu6KyCsADEQcrZcl8PvXXoIg.GwEzWICDxC9_rDNbm393JKGb-BRM63c9U2Cw3o244sAg.GIF.tkvkdldj040616/283ab5fb859e65b1956d392f806b91b60073bff7_hq.gif?type=w2");
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 40px;
+    }
+    .inpwrap{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    .pushbox ul li{
+        display: flex;
+        justify-content: space-between;
+    }
+    .pushbox .text{
+        color: black;
+    }
+    .btn_modi{
+        display: none;
+    }
+    .head{
+        border-bottom: 3px solid rgb(255, 255, 255);
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        color: white;
+    }
+
+
+    .pushbox{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 500px;
+        background-color: white;
+        border-radius: 30px;
+        overflow: hidden;
+    }
+    .pushbox ul{
+        padding: 30px 30px 0 30px;
+    }
+    .pushbox ul li{
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #000;
+    }
+    .allDel{
+        height: 40px;
+        font-weight: bold;
+        border: 0 none;
+        background-color: transparent;
+        font-size: 20px;
+        color: rgb(36, 134, 226);
+        cursor: pointer;
+        border-top: 5px solid rgb(36, 134, 226);
+    }
+
+    .icon a:first-child:link{
+        color: orange;
+        font-size: 17px;
+    }
+    .icon a:nth-child(2):link{
+        color: green;
+        font-size: 17px;
+        margin-left: 5px;
+    }
+    .icon a:nth-child(3):link{
+        color: red;
+        font-size: 17px;
+        margin-left: 5px;
+    }
+
+    
+</style>
+<body>
+        <!-- 삭제<i class="fa-solid fa-trash-can"></i>
+    수정<i class="fa-solid fa-screwdriver-wrench"></i>
+    체크<i class="fa-regular fa-circle-check"></i> -->
+<div class="todolist">
+    <div class="head">
+        TODO LIST
+    </div>
+        <div class="inpwrap">
+            <input type="hidden" class="num">
+            <input type="text" class="inp">
+            <div class="flex">
+                <button class="btn_input"><i class="fa-regular fa-circle-check"></i></button>
+                <button class="btn_modi">수정</button>
+            </div>
+        </div>
+        <div class="pushbox">
+            <ul></ul>
+            <button class="allDel" onclick="listAllDell()">All Delete</button>
+        </div>
+</div>
+
+
+<script>
+    let listData = [
+        {todo:"자바스크립트1",done:false},
+        {todo:"자바스크립트2",done:false},
+        {todo:"자바스크립트3",done:false},
+    ]
+    const inpElem = document.querySelector(".inp")
+    const btn_inputElem = document.querySelector(".btn_input")
+    const btn_modiElem = document.querySelector(".btn_modi")
+    const numElem = document.querySelector(".num") 
+    const allDelElem = document.querySelector(".allDel")
+    const pushElem = document.querySelector(".pushbox ul") 
+
+
+    btn_inputElem.addEventListener("click",function(){
+        let value = {"todo":inpElem.value,"done":false}
+
+        if(inpElem.value != ""){
+            listData.push(value)
+            viewData()
+            inpElem.value =  ""
+        }else{
+            alert("오늘의 할 일을 입력하세요.");
+            inpElem.focus()
+        }
+
+    })
+
+    function viewData(){
+        let viewList = "";
+        listData.forEach(function(item,index){
+            // console.log(item.todo)
+
+            viewList += "<li" 
+                if(item.done == true){
+                    viewList += " class='done' "
+                }
+            viewList += ">"
+            viewList += "<div class='text'>"+item.todo+"</div>"
+            viewList += `<div class="icon">
+                        <a href ="javascript:void(0)" onclick = "done(${index})"><i class="fa-regular fa-circle-check"></i></a>
+                        <a href ="javascript:void(0)" onclick = "modi('${item.todo}',${index})"><i class="fa-solid fa-screwdriver-wrench"></i></a>
+                        <a href ="javascript:void(0)" onclick = itemDel(${index})><i class="fa-solid fa-trash-can"></i></a>
+                        </div>`
+            viewList += "</li>"
+        })
+        // for(let i=0; i<listData.length;i++){
+        //     console.log(listData[i].done)
+        // }
+        // 위 forEach랑 같은말
+        pushElem.innerHTML = viewList;
+    }
+
+    viewData()
+
+    function itemDel(index){
+        listData.splice(index,1)
+        viewData()
+        btn_inputElem.style.display  = "block"
+        btn_modiElem.style.display = "none"
+    }
+    allDelElem.addEventListener("click",function(){
+        listData = [];
+        btn_inputElem.style.display  = "block"
+        btn_modiElem.style.display = "none"
+        inpElem.value="";
+        inpElem.focus()
+        viewData()
+    })
+
+    function done(index){
+        console.log(index)
+        if(listData[index].done == true){
+            listData[index].done = false
+        }else{
+            listData[index].done = true
+        }
+
+        // listData[index].done = !listData[index].done; 
+        // 위 if문과 같은말
+        viewData()    
+    }
+
+    function modi(todo,index){
+        console.log(todo+index)
+        inpElem.value = todo;
+        numElem.value = index;
+        btn_inputElem.style.display  = "none"
+        btn_modiElem.style.display = "block"
+    }
+
+    btn_modiElem.addEventListener("click",function(){
+        listData[numElem.value].todo = inpElem.value;
+        listData[numElem.value].done = false;
+        inpElem.value= "";
+        btn_inputElem.style.display  = "block"
+        btn_modiElem.style.display = "none"
+        viewData()
+    })
+
+
+</script>
+</body>
+</html>
